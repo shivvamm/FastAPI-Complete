@@ -1,14 +1,29 @@
 class Enemy:
-    def __init__(self,type_of_enemy,health=10,damage=1):
-        self.type_of_enemy = type
-        self.health = health
-        self.damage = damage
+    def __init__(self,type_of_enemy,health_points,attack_damage):
+        # Encapsulation using __ to make the data memebers private as it is public 
+        # By default 
+        self.__type_of_enemy = type_of_enemy
+        self.__health_points = health_points
+        self.__attack_damage = attack_damage
 
     def talk(self):
-        print("I am an enemy")
-
-    def walk_forward(self):
-        print(f'{self.type_of_enemy} moves closer to you')
+        print("I am an Enemy")
     
-    def attack(self):
-        print(f'{self.type_of_enemy} attacks you for {self.damage} damage')
+    # def attack(self):
+    #     print(f'{self.__type_of_enemy} attacks you for {self.__damage} damage')
+
+    def get_type_of_enemy(self):
+        return self.__type_of_enemy
+    
+    def walk_forward(self):
+        print(f'{self.__type_of_enemy} moves closer to you')
+
+    def special_attack(self):
+        print('Enemy has not special attack')
+
+
+
+
+
+
+

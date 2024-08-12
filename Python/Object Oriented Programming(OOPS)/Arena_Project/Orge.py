@@ -13,5 +13,5 @@ class Ogre(Enemy):
     def special_attack(self):
         did_special_attack_work = random.random() < 0.2
         if did_special_attack_work:
-            self.__health_points += 4
+            self.health_points += 4
             print("Ogre attack has increaded by  4!")

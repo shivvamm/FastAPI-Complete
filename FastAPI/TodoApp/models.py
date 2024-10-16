@@ -1,4 +1,4 @@
-from settings import Base
+from .settings import Base
 from sqlalchemy import Column,Integer,String, Boolean, ForeignKey
 
 
@@ -24,3 +24,4 @@ class Todos(Base):
     priority = Column(Integer)
     complete = Column(Boolean,default=False)
     owner_id = Column(Integer,ForeignKey("users.id"))
+    due_date = Column(String)

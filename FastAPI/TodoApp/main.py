@@ -1,11 +1,17 @@
 from fastapi import FastAPI
-import models
-from settings import engine
-from routers import auth,todos,admin, users
+from .models import Base
+from .settings import engine
+from .routers import auth,todos,admin, users
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+
+#Mock test check
+@app.get("/healthly/")
+async def health_check():
+    return {"status": "Healthy"}
 
 
 app.include_router(auth.router)

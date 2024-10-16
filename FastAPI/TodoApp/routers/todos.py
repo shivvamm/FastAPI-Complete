@@ -1,9 +1,9 @@
 from fastapi import APIRouter,Depends,HTTPException,Body,Path,Query
-from settings import SessionLocal
+from ..settings import SessionLocal
 from typing import Annotated
 from dotenv import load_dotenv
 from sqlalchemy.orm import Session
-from models import Todos
+from ..models import Todos
 from starlette import status
 from pydantic import BaseModel,Field
 from .auth import get_current_user
@@ -82,7 +82,7 @@ async def create_todo(user:user_dependency,db:db_dependency,
 
 
 
-@router.post("/todo",status_code=status.HTTP_201_CREATED)
+@router.post("/todo/prompt",status_code=status.HTTP_201_CREATED)
 async def create_todo_by_prompt(user:user_dependency,db:db_dependency,
                 todo_request:PromptTodoRequest):
     print(user)

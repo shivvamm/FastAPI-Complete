@@ -19,7 +19,10 @@ llm = ChatGroq(
 )
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/todos",
+    tags=['todos']
+)
 
 
 

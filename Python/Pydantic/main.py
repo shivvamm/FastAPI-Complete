@@ -71,13 +71,13 @@ class Student(BaseModel):
 
 
 
-# for student in data:
-#     #Unpacking the json in our model
-#     model = Student(**student)
-#     # for module in model.modules:
-#     #     print(module.id)
-#     # Convert into Dictionary for Further use with all the complex data types maintaintng the data objects 
-#     print(model.model_dump())
+for student in data:
+    #Unpacking the json in our model
+    model = Student(**student)
+    # for module in model.modules:
+    #     print(module.id)
+    # Convert into Dictionary for Further use with all the complex data types maintaintng the data objects 
+    print(model.model_dump())
 
 # print("### Json")
 # for student in data:
@@ -90,3 +90,5 @@ class Student(BaseModel):
 # Jshom Schema to share with other devs for validation in other languages
 print(Module.model_json_schema())
  
+print("## Json Schema for student")
+print(Student.model_json_schema())  

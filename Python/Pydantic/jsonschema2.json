@@ -1,0 +1,68 @@
+{
+  "$defs": {
+    "DepartmentEnum": {
+      "enum": [
+        "Arts and Humanities",
+        "Life Sciences",
+        "Science and Engineering"
+      ],
+      "title": "DepartmentEnum",
+      "type": "string"
+    },
+    "Module": {
+      "properties": {
+        "id": {
+          "anyOf": [
+            { "type": "integer" },
+            { "format": "uuid", "type": "string" }
+          ],
+          "title": "Id"
+        },
+        "name": { "title": "Name", "type": "string" },
+        "professor": { "title": "Professor", "type": "string" },
+        "credits": { "enum": [10, 20], "title": "Credits", "type": "integer" },
+        "registration_code": { "title": "Registration Code", "type": "string" }
+      },
+      "required": ["id", "name", "professor", "credits", "registration_code"],
+      "title": "Module",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "id": { "format": "uuid", "title": "Id", "type": "string" },
+    "name": { "title": "Name", "type": "string" },
+    "date_of_birth": {
+      "format": "date",
+      "title": "Date Of Birth",
+      "type": "string"
+    },
+    "GPA": { "maximum": 4.0, "minimum": 0.0, "title": "Gpa", "type": "number" },
+    "course": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "integer" },
+        { "type": "null" }
+      ],
+      "title": "Course"
+    },
+    "department": { "$ref": "#/$defs/DepartmentEnum" },
+    "fees_paid": { "title": "Fees Paid", "type": "boolean" },
+    "modules": {
+      "default": [],
+      "items": { "$ref": "#/$defs/Module" },
+      "title": "Modules",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "date_of_birth",
+    "GPA",
+    "course",
+    "department",
+    "fees_paid"
+  ],
+  "title": "Student",
+  "type": "object"
+}

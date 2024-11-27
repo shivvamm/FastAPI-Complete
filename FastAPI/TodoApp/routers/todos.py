@@ -7,16 +7,16 @@ from ..models import Todos
 from starlette import status
 from pydantic import BaseModel,Field
 from .auth import get_current_user
-from langchain_groq import ChatGroq
+# from langchain_groq import ChatGroq
 import os 
 
 load_dotenv()
 
-llm = ChatGroq(
-    temperature=0.0,
-    groq_api_key=os.getenv("GROQ_API_KEY"),
-    model_name="llama3-70b-8192",
-)
+# llm = ChatGroq(
+#     temperature=0.0,
+#     groq_api_key=os.getenv("GROQ_API_KEY"),
+#     model_name="llama3-70b-8192",
+# )
 
 
 router = APIRouter(
@@ -78,7 +78,7 @@ async def create_todo(user:user_dependency,db:db_dependency,
     if user is None:
         raise HTTPException(status_code=401,detail="Authentication Failed")
     
-    todo_model = Todos(**todo_request.dict(),owner_id = user.get('id'))
+    todo_model = Todos(**todo_request.model_dump(),owner_id = user.get('id'))
 
     db.add(todo_model)
     db.commit()

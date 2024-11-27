@@ -1,0 +1,15 @@
+{
+  "properties": {
+    "id": {
+      "anyOf": [{ "type": "integer" }, { "format": "uuid", "type": "string" }],
+      "title": "Id"
+    },
+    "name": { "title": "Name", "type": "string" },
+    "professor": { "title": "Professor", "type": "string" },
+    "credits": { "enum": [10, 20], "title": "Credits", "type": "integer" },
+    "registration_code": { "title": "Registration Code", "type": "string" }
+  },
+  "required": ["id", "name", "professor", "credits", "registration_code"],
+  "title": "Module",
+  "type": "object"
+}

@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 import uuid
 from typing import Literal
 from enums import DepartmentEnum
-url = 'https://raw.githubusercontent.com/bugbytes-io/datasets/master/students_v2.json'
+url = 'https://raw.githubusercontent.com/bugbytes-io/datasets/master/students_v3.json'
 
 response = requests.get(url)
 data = response.json()
@@ -35,26 +35,28 @@ class Student(BaseModel):
     # Enum small number of possible values  
     department:DepartmentEnum
     modules:list[Module] = Field(default=[], max_items=10) # default value = empty list
+    tags: list[str] 
 
     class Config:
         # Output real value of enum rather than the object itself
         use_enum_values=True
         title = 'Student Model'
         extra = 'allow'
-
+    #Root Validator after all the individual validation is done 
     @model_validator(mode='after')
     def validate_gpa_and_department(cls,values):
         dept = values.department
         gpa = values.GPA
-        dept_scienc = dept == DepartmentEnum.SCIENCE_AND_ENGINEERING
-        if dept_scienc and gpa <= 3.0:
-                raise ValueError("GPA must be 3.0 or higher")
+        dept_science =  dept == 'Science and Engineering'
+        if dept_science and gpa < 3.0:
+            raise ValueError(f"GPA cannot be less than 3.0 in Science and Engineering department. Given GPA: {gpa}")
+        
         return values
 
-
-    @field_validator('GPA')
-    def validate_gpa(cls,value,values):
-        pass
+    # Pre Validation before pydanti default validation 
+    @field_validator('tags',mode='before')
+    def split_tags(cls,value):
+        return value.split(",")
 
     @field_validator('modules')
     def validate_module_length(cls,value):
@@ -77,6 +79,7 @@ for student in data:
     try:
         model = Student(**student)
         print(f'GPA: {model.GPA},Department : {model.department}')
+        print(f"Tags{model.tags}")
     except ValueError as e:
         print(e)
     # pprint(model)

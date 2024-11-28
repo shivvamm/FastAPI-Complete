@@ -42,6 +42,8 @@ class Student(BaseModel):
         use_enum_values=True
         title = 'Student Model'
         extra = 'allow'
+        str_strip_whitespace = True
+
     #Root Validator after all the individual validation is done 
     @model_validator(mode='after')
     def validate_gpa_and_department(cls,values):
@@ -57,6 +59,13 @@ class Student(BaseModel):
     @field_validator('tags',mode='before')
     def split_tags(cls,value):
         return value.split(",")
+    
+    @field_validator('tags')
+    def remove_stickers(cls,value):
+        if value == 'stickers':
+            raise ValueError("Stickers are not allowed")
+        return value
+
 
     @field_validator('modules')
     def validate_module_length(cls,value):

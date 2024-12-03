@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, Depends,HTTPException
+from fastapi import FastAPI, APIRouter, Depends,HTTPException, Request
 from pydantic import BaseModel
 from ..settings import SessionLocal
 from ..models import Users
@@ -9,6 +9,8 @@ from datetime import timedelta,timezone,datetime
 from starlette import status
 from fastapi.security import OAuth2PasswordRequestForm,OAuth2PasswordBearer
 from jose import jwt, JWTError
+from fastapi.templating import Jinja2Templates
+
 
 router = APIRouter(
     prefix="/auth",
@@ -72,6 +74,22 @@ async def get_current_user(token:Annotated[str,Depends(oauth2_bearer)]):
         return {'username':username,'id':user_id,'user_role':user_role}
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Could not validate user.")
+
+templates = Jinja2Templates(directory="TodoApp/templates")
+
+## PAGES ##
+
+
+### Endpoints ###
+@router.get("/login-page")
+def render_login_page(request:Request):
+    return templates.TemplateResponse('login.html',{"request":request})
+
+
+@router.get("/register-page")
+def render_register_page(request:Request):
+    return templates.TemplateResponse('register.html',{"request":request})
+
 
 @router.post("/",status_code=status.HTTP_201_CREATED)
 async def create_user(

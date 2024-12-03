@@ -7,12 +7,13 @@ if (todoForm) {
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-
+    console.log(data);
     const payload = {
       title: data.title,
       description: data.description,
       priority: parseInt(data.priority),
       complete: false,
+      due_date: data.due_date,
     };
 
     try {

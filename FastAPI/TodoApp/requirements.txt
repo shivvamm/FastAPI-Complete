@@ -4,3 +4,6 @@ alembic
 jinja2
 sqlalchemy
 psycopg2
+passlib
+starlette
+python-jose

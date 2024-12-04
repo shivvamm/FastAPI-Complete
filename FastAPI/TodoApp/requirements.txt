@@ -9,3 +9,4 @@ starlette
 python-jose
 pydantic
 python-multipart
+python-dotenv

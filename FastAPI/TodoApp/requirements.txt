@@ -3,3 +3,4 @@ uvicorn
 alembic
 jinja2
 sqlalchemy
+psycopg2
